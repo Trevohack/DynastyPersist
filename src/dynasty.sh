@@ -154,7 +154,7 @@ help() {
         Schedule tasks for persistence.
 
         \e[93m3. Custom User with Root:\e[0m
-        Create root privileged user account.
+        Create a root privileged user account.
 
         \e[93m4. RCE Persistence:\e[0m
         Remote Code Execution capabilities through a web server.
@@ -217,7 +217,7 @@ main() {
        elif [ "$input" == "help" ] || [ input == "h" ]; then
            help 
        else 
-           echo -e "${RED} Invalid command"
+           echo -e "${RED}[ERROR] Invalid command"
         fi
 }
 clear 
