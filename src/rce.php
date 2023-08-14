@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Root Eternity</title>
+    <title>Dynasty Persist</title>
 </head>
 <body>
     <script>
