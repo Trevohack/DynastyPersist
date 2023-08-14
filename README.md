@@ -1,10 +1,9 @@
 
 # DynastyPersist
-A Linux persistence tool!
 
-# Linux Persistence Script
+* A Linux persistence tool!
 
-A powerful and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
+* A powerful and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
 
 ![GitHub](https://img.shields.io/github/license/trevohack/DynastyPersist)
 ![GitHub stars](https://img.shields.io/github/stars/trevohack/DynastyPersist)
