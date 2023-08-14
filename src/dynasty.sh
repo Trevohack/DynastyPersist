@@ -210,7 +210,7 @@ main() {
         |_/ \/ | | (_| _>  |_ \/  |  (/_ | _> | _>  |_ 
             /                 /                        
             "
-    text="Made by: Trevohack aka SpaceShuttleIO"
+    text="Made by: @Trevohack | @opabravo | @matheuz"
     delay="0.1"
 
     for ((i = 0; i < ${#text}; i++)); do
