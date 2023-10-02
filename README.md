@@ -2,7 +2,7 @@
 <h1 align="center">DynastyPersist</h1>
 
 <div align="center">
-  <a target="_blank" href="#"><img src="https://i.postimg.cc/bN4DCJ1j/Screenshot-from-2023-10-02-07-03-19.png" width="200"></a>
+  <a target="_blank" href="#"><img src="https://i.postimg.cc/bN4DCJ1j/Screenshot-from-2023-10-02-07-03-19.png" width="450"></a>
 </div>
 
 
