@@ -1,11 +1,14 @@
 
-<h1 align="center">DynastyPersist></h1>
+<h1 align="center">DynastyPersist</h1>
 
-![](https://i.postimg.cc/bN4DCJ1j/Screenshot-from-2023-10-02-07-03-19.png)
+<div align="center">
+  <a target="_blank" href="#"><img src="https://i.postimg.cc/bN4DCJ1j/Screenshot-from-2023-10-02-07-03-19.png" width="200"></a>
+</div>
+
 
 * A Linux persistence tool!
 
-* A powerful and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
+* A powerul and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
 
 ![GitHub](https://img.shields.io/github/license/trevohack/DynastyPersist)
 ![GitHub stars](https://img.shields.io/github/stars/trevohack/DynastyPersist)
