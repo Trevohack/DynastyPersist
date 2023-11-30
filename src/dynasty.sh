@@ -242,6 +242,8 @@ main() {
            configDiamorphine
        elif [ "$input" == "6" ]; then
            bashrc 
+       elif [ "$input" == "7" ]; then
+           ServiceOnSystemd 
        elif [ "$input" == "8" ]; then
            LDPreloadPrivesc 
        elif [ "$input" == "9" ]; then
