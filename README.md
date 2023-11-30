@@ -21,7 +21,7 @@
 
 5. **LKM/Rootkit:** Demonstrates Linux Kernel Module (LKM) based rootkit persistence.
 
-6. **Bashrc Persistence:** Modifies user-specific shell initialization files for persistence.
+6. **Bashrc Persistence:** Modifies user-specific shell initialization files for persistence (aliases / reverse shells). 
 
 7. **Systemd Service for Root:** Sets up a systemd service for achieving root persistence.
 
