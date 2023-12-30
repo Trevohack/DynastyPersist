@@ -6,6 +6,8 @@
 
 * A powerful and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
 
+* `There Will Be A Huge Update On This Tool Soon!`
+
 ![GitHub](https://img.shields.io/github/license/trevohack/DynastyPersist)
 ![GitHub stars](https://img.shields.io/github/stars/trevohack/DynastyPersist)
 
