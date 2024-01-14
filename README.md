@@ -6,9 +6,10 @@
   DynastyPersist: A streamlined tool for achieving Linux persistence effortlessly.<br>
   Supports <b><i>KoTH, Battlegrounds and Pentest Operations</i></b><br>
    <br>
-  <img src="https://img.shields.io/github/license/trevohack/DynastyPersist" alt="GitHub License">
-  <img src="https://img.shields.io/github/stars/trevohack/DynastyPersist" alt="GitHub Stars">
-  <img alt="Static Badge" src="https://img.shields.io/badge/Tested--on-Linux-violet?logo=linux">
+  <img alt="GitHub License" src="https://img.shields.io/github/license/Trevohack/DynastyPersist?style=for-the-badge&labelColor=blue&color=violet">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Trevohack/DynastyPersist?style=for-the-badge&labelColor=blue&color=violet">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Tested--on-Linux-violet?style=for-the-badge&logo=linux&logoColor=black&labelColor=blue">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Bash-violet?style=for-the-badge&logo=gnubash&logoColor=black&labelColor=blue">
 </p> 
 
 ## Documentation
