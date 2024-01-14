@@ -5,8 +5,8 @@
 #                                              #    
 #        Title: Dynasty Persist                #  
 #        Author: Trevohack                     # 
-#        Date: 24.12.2023                      #  
-#        Version: 1.3                          # 
+#        Date: 1.14.2024                       #  
+#        Version: 1.4                          # 
 #                                              # 
 ################################################ 
 
@@ -20,7 +20,8 @@ helpmenu() {
 
                          U . S . A . G . E 
             ./dynasty.sh <ip> <port> <mode> 
-            ./dynasty.sh 10.10.110.101 9999 ctf 
+            ./dynasty.sh 10.10.110.101 9999 normal
+            ./dynasty.sh ctf 
 
         { ─────────────────────────────────────────────── } 
 
@@ -318,14 +319,12 @@ main() {
         fi 
 } 
 
-if [ $# -eq 0 ]; then
-    helpmenu 
-elif [ $# -eq 3 ] && [ "$3" == "ctf" ]; then
-    clear 
-    ctf_Mode 
+if [ $# -eq 1 ] && [ "$1" == "ctf" ]; then
+    clear
+    ctf_Mode
 elif [ $# -eq 3 ] && [ "$3" == "normal" ]; then
-    clear 
+    clear
     main
-else 
+else
     helpmenu 
 fi
