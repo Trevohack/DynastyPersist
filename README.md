@@ -19,7 +19,8 @@
   <p></p>
 </div>
 
-![image](https://github.com/Trevohack/DynastyPersist/assets/136177431/0abde422-ce91-4aa5-b0a2-f0ed45a9ca23)
+![image](https://github.com/Trevohack/DynastyPersist/assets/136177431/be6f079e-f6a1-4bb6-9b15-510c0cfbcdc3)
+
 
 
 
