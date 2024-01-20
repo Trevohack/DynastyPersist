@@ -274,7 +274,7 @@ EOF
 
 main() {
 
-        cat banner.txt
+        cat bin/banner.txt
         echo -e """ 
 
        [${RED}1${RESET}] SSH Key Generation                       [${RED}4${RESET}] RCE Persistence 
