@@ -2,7 +2,7 @@
 
 <h1 align="center">DynastyPersist 1.4</h1>
 
-<p align="center">
+<div align="center">
   DynastyPersist: A streamlined tool for achieving Linux persistence effortlessly.<br>
   Supports <b><i>KoTH, Battlegrounds and Pentest Operations</i></b><br>
    <br>
@@ -10,7 +10,14 @@
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Trevohack/DynastyPersist?style=for-the-badge&labelColor=blue&color=violet">
   <img alt="Static Badge" src="https://img.shields.io/badge/Tested--on-Linux-violet?style=for-the-badge&logo=linux&logoColor=black&labelColor=blue">
   <img alt="Static Badge" src="https://img.shields.io/badge/Bash-violet?style=for-the-badge&logo=gnubash&logoColor=black&labelColor=blue">
-</p> 
+  <p></p>
+    <a href="https://github.com/Trevohack/DynastyPersist?tab=readme-ov-file#installation">Install</a>
+  <span> • </span>
+       	<a href="https://github.com/Trevohack/DynastyPersist?tab=readme-ov-file#documentation">Documentation</a>
+  <span> • </span>
+	<a href="https://github.com/Trevohack/DynastyPersist?tab=readme-ov-file#usage">Usage</a>
+  <p></p>
+</div>
 
 ![image](https://github.com/Trevohack/DynastyPersist/assets/136177431/0abde422-ce91-4aa5-b0a2-f0ed45a9ca23)
 
