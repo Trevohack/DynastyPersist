@@ -12,6 +12,10 @@
   <img alt="Static Badge" src="https://img.shields.io/badge/Bash-violet?style=for-the-badge&logo=gnubash&logoColor=black&labelColor=blue">
 </p> 
 
+![image](https://github.com/Trevohack/DynastyPersist/assets/136177431/0abde422-ce91-4aa5-b0a2-f0ed45a9ca23)
+
+
+
 ## Documentation
 
 ### [ FEATURES ]
