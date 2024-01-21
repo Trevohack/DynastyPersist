@@ -5,8 +5,8 @@
 #                                              #    
 #        Title: Dynasty Persist                #  
 #        Author: Trevohack                     # 
-#        Date: 1.14.2024                       #  
-#        Version: 1.4.2                        # 
+#        Date: 1.21.2024                       #  
+#        Version: 1.5                          # 
 #                                              # 
 ################################################ 
 
@@ -316,7 +316,7 @@ payloads() {
     [${RED}5${RESET}] LKM/Rootkit
     [${RED}6${RESET}] Bashrc Persistence 
     [${RED}7${RESET}] Systemd Service for Root
-    [${RED}8${RESET}] LD_PRELOAD Privilege Escalaion Config                 
+    [${RED}8${RESET}] LD_PRELOAD Privilege Escalation Config                 
     [${RED}9${RESET}] Backdooring Message of the Day / Header 
     [${RED}10${RESET}] Modify An Existing Systemd Service 
     [${RED}11${RESET}] Backdoor APT 
@@ -375,7 +375,7 @@ main() {
             ModServiceOnSystemd 
         elif  [ "$payload" == "11" ]; then
             backdoorApt
-        elif [ "$payload" == "options" ] || [ payload == "help" ] || [ payload == "h" ] || [ payload == "show options" ]; then
+        elif [ "$input" == "show options" ] || [ "$input" == "help" ]; then
             helpmenu 
         else 
             echo -e "${RED}[ERROR] Invalid command!"
