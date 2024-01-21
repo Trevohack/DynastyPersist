@@ -1,7 +1,7 @@
 
 
 
-<h1 align="center">DynastyPersist 1.4</h1>
+<h1 align="center">DynastyPersist 1.5</h1>
 
 <div align="center">
   DynastyPersist: A streamlined tool for achieving Linux persistence effortlessly.<br>
