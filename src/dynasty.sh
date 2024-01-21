@@ -22,7 +22,7 @@ helpmenu() {
 
                          U . S . A . G . E 
             ./dynasty.sh <ip> <port> <mode> 
-            ./dynasty.sh 10.10.110.101 9999 normal
+            ./dynasty.sh 10.10.110.101 9999 console 
             ./dynasty.sh ctf 
 
         { ─────────────────────────────────────────────── } 
