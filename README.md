@@ -46,7 +46,7 @@
 
 #### SSH Key Generation
 
-* Gain access to a server using `ssh` key generation. This module creates an `id_rsa` key for every user. Which can be used for reverse access. After, running this module the attacker has the ability to connect to the server via `ssh`.
+* Gain access to a server using `ssh` key generation. This module creates an `id_rsa` key for every user. Which can be used for reverse access. After, running this module the attacker can connect to the server via `ssh`.
 
 * This can be manually done using the `ssh-keygen` command. However, the module creates a private key for every user in no time. 
 
@@ -60,7 +60,7 @@ root@kali ~ ssh -i id_rsa root@10.10.110.101
 
 * Cronjobs in Linux are scheduled tasks that run automatically at specified intervals.
 
-* One of the most efficient modules, that involves reverse shells. This module directly writes reverse shell commands to `/etc/crontab`. Which will pop up a shell in the port your listening. 
+* One of the most efficient modules, that involves reverse shells. This module directly writes reverse shell commands to `/etc/crontab`. Which will pop up a shell in the port you listening to. 
 
 ```bash
 root@kali ~ nc -nvlp 9999
@@ -80,7 +80,7 @@ root@kali ~ ssh newuser@10.10.110.101
 
 #### RCE Persistence 
 
-* This module, comes with a `php` script that is hosted in the web root directory. The script is located in `/var/www/dynasty_rce/rce.php`. Further, the prefix `dynasty_rce` can be hidden if the `LKM` module is run before. 
+* This module, comes with a `php` script that is hosted in the web root directory. The script is located in `/var/www/html/dynasty_rce/rce.php`. Further, the prefix `dynasty_rce` can be hidden if the `LKM` module is run before. 
 
 * Visiting `victim_ip:port/dynasty_rce/rce.php` will give you the power to run commands within the shell. 
 
@@ -88,7 +88,7 @@ root@kali ~ ssh newuser@10.10.110.101
 
 ### LKM Rootkit
 
-* An advance persistence method, that implants a rootkit to the server's kernel. The program focuses on an open source `LKM` rootkit called `Diamorphine`. The module is in `/var/tmp/.memory` as a temporary location. This directory is deleted after the module is set up. 
+* An advance persistence method, that implants a rootkit to the server's kernel. The program focuses on an open-source `LKM` rootkit called `Diamorphine`. The module is in `/var/tmp/.memory` as a temporary location. This directory is deleted after the module is set up. 
 
 * The below code block shows the uses of this module. 
 
@@ -104,7 +104,7 @@ victim@ubuntu ~ kill -63 0 # Make it appear in lsmod output
 
 #### Bashrc Persistence 
 
-* This module, writes reverse shell commands, aliases, and variables for reverse access. A shell is gifted when a user logins to the server or the person use `find` or `cat`.
+* This module, writes reverse shell commands, aliases, and variables for reverse access. A shell is gifted when a user logs in to the server or the person uses `find` or `cat`.
 
 ```bash
 root@kali ~ nc -nvlp 9999
@@ -134,9 +134,9 @@ WantedBy=default.target"
 
 * Module Number: `7` 
 
-#### LD_PRELOAD Privilege Escalaion Config
+#### LD_PRELOAD Privilege Escalation Config
 
-* LD_PRELOAD is an environment variable in Linux that allows users to pre-load a shared library before other libraries. Privilege escalation using LD_PRELOAD involves loading a malicious library to intercept and modify system calls, potentially gaining elevated privileges. The module backdoors commands like `find` and `wget`.
+* LD_PRELOAD is an environment variable in Linux that allows users to pre-load a shared library before other libraries. Privilege escalation using LD_PRELOAD involves loading a malicious library to intercept and modify system calls, potentially gaining elevated privileges. The module backdoors command like `find` and `wget`.
 
 * Module Number: `8` 
 
