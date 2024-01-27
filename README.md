@@ -210,4 +210,7 @@ $ cd DynastyPersist/src
 Via Curl 
 ```bash
 $ curl -sSL https://raw.githubusercontent.com/Trevohack/DynastyPersist/main/src/dynasty.sh | bash
-```
+``` 
+
+## Thank you! 
+
