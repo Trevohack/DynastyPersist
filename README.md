@@ -86,12 +86,10 @@ root@kali ~ ssh newuser@10.10.110.101
 
 * Module Number: `4`
 
-### LKM Rootkit
+#### LKM Rootkit
 
-* An advance persistence method, that implants a rootkit to the server's kernel. The program focuses on an open-source `LKM` rootkit called `Diamorphine`. The module is in `/var/tmp/.memory` as a temporary location. This directory is deleted after the module is set up. 
-
+* An advanced persistence method, that implants a rootkit to the server's kernel. The program focuses on an open-source `LKM` rootkit called `Diamorphine`. The module is in `/var/tmp/.memory` as a temporary location. This directory is deleted after the module is set up. 
 * The below code block shows the uses of this module. 
-
 ```bash
 victim@ubuntu ~ kill -64 0 # Promtes to root user. 
 victim@ubuntu ~ mkdir dynasty_persist # Any directory starting with dynasty will be hidden.
