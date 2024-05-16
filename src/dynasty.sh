@@ -24,6 +24,10 @@ helpmenu() {
             ./dynasty.sh 10.10.110.101 9999 console 
             ./dynasty.sh ctf 
 
+            [ Basic Commands ]
+            - get all payloads: show payloads
+            - trigger a payload: use <payload_num>
+
         { ─────────────────────────────────────────────── } 
 
         \e[93m1. [ Tested on Debian Systems ]\e[0m
@@ -389,6 +393,6 @@ if [ $# -eq 1 ] && [ "$1" == "ctf" ]; then
 elif [ $# -eq 3 ] && [ "$3" == "console" ]; then
     clear 
     main
-else
+else 
     helpmenu 
-fi
+fi 
