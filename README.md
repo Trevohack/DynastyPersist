@@ -10,7 +10,6 @@
   <img alt="GitHub License" src="https://img.shields.io/github/license/Trevohack/DynastyPersist?style=for-the-badge&labelColor=blue&color=violet">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Trevohack/DynastyPersist?style=for-the-badge&labelColor=blue&color=violet">
   <img alt="Static Badge" src="https://img.shields.io/badge/Tested--on-Linux-violet?style=for-the-badge&logo=linux&logoColor=black&labelColor=blue">
-  <img alt="Static Badge" src="https://img.shields.io/badge/Bash-violet?style=for-the-badge&logo=gnubash&logoColor=black&labelColor=blue">
   <p></p>
     <a href="https://github.com/Trevohack/DynastyPersist?tab=readme-ov-file#installation">Install</a>
   <span> • </span>
